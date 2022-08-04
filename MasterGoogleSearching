@@ -1,0 +1,13 @@
+Example to query on google
+
+"string" 
+"string" -anotherString
+"string" +anotherString
+"string" OR anotherString
+inurl: string
+intitle: string
+allinurl: string *
+string intext:"string *"
+Link:example.com
+filetype: {Pdf,zip,ppt,xls etc..}
+The order of words into research is important
