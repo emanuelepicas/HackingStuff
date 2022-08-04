@@ -11,3 +11,10 @@ string intext:"string *"
 Link:example.com
 filetype: {Pdf,zip,ppt,xls etc..}
 The order of words into research is important
+filetype:xls inurl:"*.xls"
+mp3 intilte: indexof
+intitle: "index of" inurl:ftp
+allintext: "password" filetype:log
+filetype: env DB_PASSWORD
+fyletype:xls inurl:email site:.com
+cybersercurity (intitle:"resources" | inurl:resources) site:*.*
